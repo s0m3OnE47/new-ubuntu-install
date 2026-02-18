@@ -8,6 +8,7 @@ Shows progress, per-step success/failure, and a final summary.
 from __future__ import annotations
 
 import os
+import re
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -78,6 +79,10 @@ def _all_steps() -> list[dict]:
             ],
         },
         {
+            "name": "Set ZSH theme to agnoster and DEFAULT_USER",
+            "run": _set_zsh_theme,
+        },
+        {
             "name": "Install Oh My Fish",
             "optional": True,
             "commands": [
@@ -135,6 +140,27 @@ def _append_fish_theme() -> bool:
         return True
     with open(fish_config, "a") as f:
         f.write(theme_lines)
+    return True
+
+
+def _set_zsh_theme() -> bool:
+    """Set ZSH_THEME=\"agnoster\" and add DEFAULT_USER=\"$(whoami)\" in ~/.zshrc."""
+    zshrc_path = f"{HOME}/.zshrc"
+    try:
+        with open(zshrc_path) as f:
+            content = f.read()
+    except FileNotFoundError:
+        return True  # .zshrc not created yet (e.g. Oh My Zsh failed)
+    content = re.sub(r"ZSH_THEME=.*", 'ZSH_THEME="agnoster"', content, count=1)
+    if "DEFAULT_USER=" not in content:
+        content = re.sub(
+            r'(ZSH_THEME="agnoster")',
+            r'\1\nDEFAULT_USER="$(whoami)"',
+            content,
+            count=1,
+        )
+    with open(zshrc_path, "w") as f:
+        f.write(content)
     return True
 
 

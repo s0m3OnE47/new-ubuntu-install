@@ -33,10 +33,17 @@ def _all_steps() -> list[dict]:
                 "sudo apt update",
                 "sudo apt install -y chrome-gnome-shell curl git vim zsh fish "
                 "fonts-powerline xfce4-terminal nodejs npm locate gnome-tweaks "
-                "gnome-shell-extensions libfuse2t64 build-essential ffmpeg cmake ranger",
+                "gnome-shell-extensions libfuse2t64 build-essential ffmpeg cmake ranger "
+                "python3-pip",
             ],
         },
         {"name": "Update locate DB", "commands": ["sudo updatedb"]},
+        {
+            "name": "Install uv (Astral)",
+            "commands": [
+                "curl -LsSf https://astral.sh/uv/install.sh | sh",
+            ],
+        },
         {
             "name": "Create SSH key (ed25519)",
             "skip_if": lambda: os.path.exists(f"{HOME}/.ssh/id_ed25519"),

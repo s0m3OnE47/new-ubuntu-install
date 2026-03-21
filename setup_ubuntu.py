@@ -38,14 +38,14 @@ def _all_steps() -> list[dict]:
             ],
         },
         {
-            "name": "Install Neovim (apt + latest AppImage in ~/.local/bin)",
+            "name": "Install Neovim (apt + latest AppImage in ~/.local/bin) & Lazyvim",
             "commands": [
-                "sudo apt install -y neovim",
                 "mkdir -p ~/.local/bin",
                 "cd ~/.local/bin && curl -fLO "
                 "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage",
                 "chmod u+x ~/.local/bin/nvim-linux-x86_64.appimage",
                 "mv ~/.local/bin/nvim-linux-x86_64.appimage ~/.local/bin/nvim",
+                "git clone https://github.com/LazyVim/starter ~/.config/nvim",
             ],
         },
         {"name": "Update locate DB", "commands": ["sudo updatedb"]},

@@ -141,6 +141,12 @@ def _all_steps() -> list[dict]:
                 "sudo mv ~/zsh-autocomplete /opt",
             ],
         },
+        {
+            "name": "Dash-to-dock: click to minimize",
+            "commands": [
+                "gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'minimize'",
+            ],
+        },
     ]
 
 
